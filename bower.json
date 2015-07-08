@@ -1,0 +1,18 @@
+{
+  "name": "blogless",
+  "version": "1.0.0",
+  "authors": [
+    "sofish <happinesz@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "typo.css": "~2.1.2"
+  }
+}

@@ -1,0 +1,8 @@
+a:hover {
+  text-decoration: none;
+  box-shadow: 0 0.1px 0 #000;
+}
+
+.container{
+  width: 80%; max-width: 1000px; padding: 10px; margin: 0 auto;
+}

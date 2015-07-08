@@ -1,0 +1,23 @@
+block vars
+  - name = name;
+  - tagline = tagline;
+  - description = '';
+
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, user-scalable=no')
+    meta(name='renderer', content='webkit')
+    meta(name='description', content='#{ description ? description : tagline }')
+    
+    title=name
+    
+    block styles
+      link(rel='stylesheet', href='/lib/typo.css/typo.css')
+      link(rel='stylesheet', href='/theme/default/app.css')
+      
+  body
+    block content
+    block scripts
+      script(src='/theme/default/app.js')    

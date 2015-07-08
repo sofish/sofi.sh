@@ -1,0 +1,12 @@
+block append vars
+  - name = '你好，我是 Sofish';
+  - description = '偶尔写点东西也挺好的嘛'
+  
+extends ../../theme/default/index
+
+block content
+  .container
+    h1=name 
+  
+block append scripts
+  script(src='./main.js')

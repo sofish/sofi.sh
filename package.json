@@ -1,0 +1,25 @@
+{
+  "name": "blogless",
+  "version": "1.0.0",
+  "description": "blog with no restraint",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blogless"
+  ],
+  "author": "sofish <happinesz@gmail.com> (http://sofi.sh/)",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-cssnext": "^1.0.1",
+    "gulp-jade": "^1.0.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "postcss-nested": "^0.3.2"
+  }
+}
