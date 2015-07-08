@@ -5,8 +5,16 @@ block append vars
 extends ../../theme/default/index
 
 block content
-  .container
+  .container.typo
     h1=name 
+    p 为了写 ES6 和 CSS Next，我又造了个小轮子来写点文字。现在还没有写任何东西，不过你可以帮我写，请查看这个 GitHub 
+      a(href='https://github.com/sofish/sofi.sh') 仓库
+      |。只要提一个 
+      code pull-request
+      |，一旦这个 pr 被合并，就会触发网站自动更新。想想再也不怕写错别字了，因为别人可以轻松帮我修。  
+    p 再尝试一下，其实全都写在 
+      code jade
+      |上，而不是原生 HTML。
   
 block append scripts
   script(src='./main.js')
