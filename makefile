@@ -6,6 +6,6 @@ dev: vender
 	gulp dev
 
 dist: vender
-	gulp dist && echo BUILT AT: `date` > build.log && \
+	gulp dist && gulp api && echo BUILT AT: `date` > build.log && \
 	cat server.log | awk '{ print $1}' | xargs -I{} kill -9 {} \
 	| nohup node server.js > server.log &

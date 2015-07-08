@@ -111,6 +111,4 @@ gulp.task('dev', ['template', 'js', 'css', 'api'], function() {
 
 
 // build for production
-gulp.task('dist', ['template', 'js', 'css'], function() {
-  gulp.task('api');
-});
+gulp.task('dist', ['template', 'js', 'css']);
