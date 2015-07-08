@@ -12,4 +12,4 @@ http.createServer(function(req, res) {
 
 }).listen('3535');
 
-console.log('build server is running at http://localhost:3535');
+console.log(process.pid, 'build server is running at http://localhost:3535');
