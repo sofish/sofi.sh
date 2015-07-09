@@ -3,10 +3,10 @@ let displayPosts = (articles) => {
   let ul = $('#posts');
   let lis = '';
   articles.length && articles.forEach((article, i) => {
+    let birthtime = new Date(article.createdAt).toLocaleDateString();
     lis += `
-      <div>#${i} <a href="${article.url}">${article.title}</a>
+      <div>${i + 1}. <a href="${article.url}">${article.title}</a> <small>${birthtime}</small>
         <p>${article.description}<br>
-          <small>${article.createdAt}</small>
         </p>
       </div>
     `;
