@@ -66,13 +66,12 @@ gulp.task('lint', function() {
 var imgPath = ['./article/**/*.@(gif|jpg|svg|png)'];
 var imageop = require('gulp-image-optimization');
 gulp.task('image', function(cb) {
-  gulp.src(imgPath).pipe(imageop({
+  gulp.src(imgPath, {base: './' }).pipe(imageop({
     optimizationLevel: 5,
     progressive: true,
     interlaced: true
   }))
-  .on('error', errorHandler)
-  .pipe(gulp.dest('./.dist'))
+  .pipe(gulp.dest('./.dist')).on('end', cb).on('error', cb);
 });
 
 // build api from html files
@@ -111,11 +110,18 @@ gulp.task('api', function() {
   }).on('error', errorHandler);
 })
 
+// clean .dist dir
+var clean = require('gulp-clean');
+gulp.task('clean', function () {
+  return gulp.src('./.dist', { read: false })
+    .pipe(clean());
+});
 
 // watcher for development
-gulp.task('dev', ['template', 'js', 'css', 'api'], function() {
+gulp.task('dev', ['js', 'css', 'image', 'template', 'api'], function() {
   gulp.watch(jsPath, ['js', 'lint']);
   gulp.watch(cssPath, ['css']);
+  gulp.watch(imgPath, ['image']);
 
   // watch jade file in `theme/`, but dont convert it to html
   gulp.watch(jadePath.concat('./theme/**/*.jade'), ['template']);
@@ -124,4 +130,4 @@ gulp.task('dev', ['template', 'js', 'css', 'api'], function() {
 
 
 // build for production
-gulp.task('dist', ['template', 'js', 'css']);
+gulp.task('dist', ['template', 'js', 'css', 'image']);
