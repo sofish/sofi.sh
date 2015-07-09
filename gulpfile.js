@@ -62,6 +62,19 @@ gulp.task('lint', function() {
 });
 
 
+// image compress
+var imgPath = ['./article/**/*.@(gif|jpg|svg|png)'];
+var imageop = require('gulp-image-optimization');
+gulp.task('image', function(cb) {
+  gulp.src(imgPath).pipe(imageop({
+    optimizationLevel: 5,
+    progressive: true,
+    interlaced: true
+  }))
+  .on('error', errorHandler)
+  .pipe(gulp.dest('./.dist'))
+});
+
 // build api from html files
 var fs = require('fs');
 var reg = {
