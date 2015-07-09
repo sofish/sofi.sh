@@ -3,15 +3,16 @@ block vars
   - description = '如何在任何时候发布都不宕机，且200s 发布到所有机器？如何直接写 ES6 / CSS Next?';
   
 extends ../../theme/default/index
-
+block append styles
+  link(rel='stylesheet', href='./main.css')
 block content
   
   .container.typo
+    img#flow(src='./flow.jpg')
+
     h1=name
     p #{description} 先放个图做一个 #mark，后面来更新。
-    p
-      img(src='./flow.jpg')
-  
+
   
 block append scripts
   script(src='./main.js')

@@ -1,0 +1,13 @@
+@import "../../theme/default/var.css";
+
+#flow {
+  max-width:200px;
+  float: left;
+  margin-right: 20px;
+}
+
+@media ( --viewport-tablet ) {
+  #flow {
+    float: none; max-width: auto; margin-right: 0;
+  }
+}
