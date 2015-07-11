@@ -1,0 +1,3 @@
+@custom-media --viewport-desktop (width > 1024px);
+@custom-media --viewport-tablet (width > 640px);
+@custom-media --viewport-phone (width <= 640px);
