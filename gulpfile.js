@@ -105,7 +105,10 @@ gulp.task('api', function() {
     });
 
     var dir = files[1].split('.dist').slice(0, 1) + '.dist/api';
-    if(!fs.existsSync(dir)) fs.mkdirSync(dir);
+    if(!fs.existsSync(dir)) {
+      var mkdirp = require('mkdirp');
+      mkdirp.sync(dir);
+    }
     fs.writeFileSync(dir + '/article.json', JSON.stringify(articles));
   }).on('error', errorHandler);
 })
@@ -118,7 +121,9 @@ gulp.task('clean', function () {
 });
 
 // watcher for development
-gulp.task('dev', ['js', 'css', 'image', 'template', 'api'], function() {
+gulp.task('dev', ['js', 'css', 'image', 'template'], function() {
+  gulp.run('api');
+
   gulp.watch(jsPath, ['js', 'lint']);
   gulp.watch(cssPath, ['css']);
   gulp.watch(imgPath, ['image']);
