@@ -1,7 +1,7 @@
 @import "../../theme/default/var.css";
 
 #flow {
-  max-width:200px;
+  max-width: 200px;
   float: left;
   margin-right: 20px;
 }

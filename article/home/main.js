@@ -1,3 +1,5 @@
+import { $ } from '../../theme/default/js/helpers';
+
 // build posts
 let displayPosts = (articles) => {
   let ul = $('#posts');
@@ -6,7 +8,7 @@ let displayPosts = (articles) => {
     let birthtime = new Date(article.createdAt).toLocaleDateString();
     lis += `
       <div>${i + 1}. <a href="${article.url}">${article.title}</a> <small>${birthtime}</small>
-        <p>${article.description}<br>
+        <p class="typo-small">${article.description}<br>
         </p>
       </div>
     `;

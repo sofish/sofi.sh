@@ -1,8 +1,11 @@
-a:hover {
-  text-decoration: none;
-  box-shadow: 0 0.1px 0 #000;
-}
+a:hover { text-decoration: none; box-shadow: 0 0.1px 0 #000; }
 
-.container{
-  width: 80%; max-width: 1000px; padding: 10px; margin: 0 auto;
-}
+.container{ width: 80%; max-width: 1000px; padding: 10px; margin: 0 auto; }
+.horizon { position: absolute; left: 50%; transform: translateX(-50%); }
+.center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+#gohome { display: block; padding: 5px 20px; text-align: center; color: #fff; background: #16a085; position: absolute; left: 0; top: 0; font-weight: 100; font-size: 0.8em; }
+
+#comment { position: relative; }
+#comment::before { content: '————'; display: block; margin: 30px; color: #eee; text-align: center; }
+#comment-loader { bottom: 20px; cursor: pointer; }
