@@ -30,7 +30,6 @@ var babelify = require('babelify');
 var browserify = require('browserify');
 var glob = require('glob');
 var source = require('vinyl-source-stream')
-var buff = require('vinyl-buffer')
 var files = [];
 
 jsPath.forEach(function(sec) {
