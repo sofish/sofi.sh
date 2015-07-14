@@ -1,7 +1,7 @@
 block vars
-  - name = name;
-  - tagline = tagline;
-  - description = '';
+  - name = name
+  - tagline = tagline
+  - description = ''
 
 doctype html
 html
@@ -16,11 +16,11 @@ html
     
     block styles
       link(rel='stylesheet', href='/lib/typo.css/typo.css')
-      link(rel='stylesheet', href='/theme/default/app.css')
+      link(rel='stylesheet', href='/theme/default/css/app.css')
       
   body
-    block title
-      h1.container.title=name
+    block logo
+      h1.container#logo=name
 
     block content
     

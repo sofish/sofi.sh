@@ -1,0 +1,124 @@
+block append vars
+  - name = 'JS Conf 2015 两天行'
+  - description = ''
+
+extends ../../theme/default/index
+
+block content
+  .container.typo
+    p.
+      当上海刮着大风，深圳这七月天如印象一般 —— 毫无意外的湿润炎热。北方人可能不习惯，
+      作为一个土生土长的广东人，这天气如每一个记忆中的暑假，不能更熟悉。仿若昨日。
+      年少那时经常奔跑在烈日下的球场，而今坐在桌前写参会小记的已是一胡渣满脸的大叔。
+    h2 一、技术方面
+    h4 1. React 及周边
+    p.
+      去年几乎各种大会都在讲 AngularJS，而今年变成了 React。似乎并不仅仅是中国，大家都在讲这一套
+      思考方式和解决方案。从最小单元的 Virtual DOM 技术，到组件化理念，再到编译成多端支持的工具，甚至全新
+      的数据获取方式 GraphQL，再到 Flux 架构。React 已从一个库变成一种解决方案的代名词。
+    p
+      img(async-src='https://facebook.github.io/flux/img/flux-simple-f8-diagram-with-client-action-1300w.png', alt='Flux 架构')
+    p.
+      一门技术是否带来变革，理念新旧自然会带来不一样的感受，对于我来说更希望看到的是给实际
+      应用带来不一样的体验，便利高效的体验。拿 Flux 来说，架构如上图所示，
+      和我们所熟悉的 MVC 相比，可能只是把 Controller 分开，
+      细分成 Dispather 和 Action 让分工更明确而不导致 Controller 权力太大而揽了太多
+      工作。包揽太多的例子如：在 PHP 中把一个 Model 取出的数据处理成 View 片断，见怪不怪。当年在百姓网的
+      时候就花了不短的时候做 View 与 Controller 分离的事情。总的来说，看未来半年社区体验结果来看吧。
+      值得一提的是 Flux 和之前的一个概念特别像 —— MOVE。
+    p
+      |对于 React 种种，Strikinly 刚完成使用 React 的改版，@达峰 对这方面应该有
+      a(href='https://github.com/dfguo/blog/issues/1') 比较多经验
+      |，推荐去和他聊聊，另外推荐几篇文章，应该能比较好地帮助理解这里面的一些差别和优劣。
+    ul.typo-small
+      li
+        a(href='https://medium.com/@amix3k/flux-vs-mvc-design-patterns-57b28c0f71b7') Flux vs MVC
+      li
+        a(href='http://amix.dk/blog/post/19615') MVC: history, theory and usage
+      li
+        a(href='http://www.quora.com/Is-Flux-really-worth-the-trouble-vs-MVC') Is Flux really worth the trouble vs MVC
+      li
+        a(href='https://cirw.in/blog/time-to-move-on') MVC is dead, it's time to MOVE on
+
+
+    h4 2. 数据
+    p
+      b 获取 / 发送：
+      |以前浏览器里所需数据大多通过类 jQuery 的
+      code $.ajax
+      |方式手动拉取，手动发送，而之后出现 data-binding 实现了数据自动获取和发送，
+      |即
+      code View <-> Model
+      |&nbsp;直接沟通，更精确来是使用自动处理层来完成这种任务。@尤小右 讲了 Meteor 使用&nbsp;
+      a(href='https://www.meteor.com/mini-databases') MiniMongo
+      |&nbsp;来做这个实现，值得一看。
+      |而在此之上，实现方式也可以是多样的，通过一般的 XHR，还是通过 WebSocket 呢？
+      |甚至还可以使用 Web Worker 来做非 UI 相关的数据处理，以让 UI 线程有更多时间来做渲染。
+      |Angular 2 似乎就打算这样做，这也是我今天就想尝试的一种方式。
+      |当然结果是不是可能像&nbsp;
+      a(href='http://oboejs.com/') JSON Stream
+      |&nbsp;一样 —— 理论快现实慢。关于这个可以看看我们之前就做的一个
+      a(href='https://github.com/YanagiEiichi/jsonstream') 简洁的实现
+      |。
+
+    p
+      b 同构处理：
+      |第一次接触 isomorphic 是从&nbsp;
+      a(href='http://derbyjs.com/') Derby
+      |&nbsp;开始的，那时 Meteor 也出来了，只不过相比来说太大了所以没选择它。Derby 的同构从某种程度
+      |来说要解决的是 js 在客户端和服务端都可以运行。而今日，在服务器与客户端可以
+      |同样渲染 Virtual DOM 的技术是同构，渲染成多端也是一种同构。当然这只是一种理想状态
+      |实际效果如何还是要看未来技术的实现，比如现今即使同样一份 React Native 可以编译成&nbsp;
+      |iOS 或 Android，事实却并不如 HTML 那样强大自由，同样不能跟 Native 相比。国内对于这方面似乎很少人提起。
+      |团队也准备在 Components 和 isomorphic 上做些尝试，带头的是龙哥，我只能说，有兴趣的可以一起来聊聊。
+
+    h4 3. 目标趋向
+    p
+      |发现一个很有趣的点，大会上大家都很喜欢讲点应用实战、未来理论，而国外讲师还会
+      |特别喜欢讲点 Geek 些的东西。比如把 JS 装进硬件玩 Nodebot，现场写个&nbsp;
+      a(href='http://mozvr.com/') WebVR
+      |，甚至把会场变成迪厅的 Nerd Disco。从深圳到上海，一下飞机就冲去苏打绿演唱会现场，
+      |现场舞台也做了一个 Nerd Disco 一般的效果，一首歌的时间，当时就觉得值得去玩玩，
+      |而不是买了板，却从来不去动。
+
+    p 这里有个 Youtube 视频，如果没有梯子可能加载不出来：
+    .typo-p.video
+      iframe(async-src='https://www.youtube.com/embed/A8fhuukLK2s', frameborder=0, allowfullscreen)
+
+
+    h2 二、关于人
+    p.
+      见了不少新老朋友，吐槽一下深圳的同学都没人提议去吃点好的。当中最亮的一位应该属于
+      Lighting Talk 上分享图片/视频 Poly 化的章文丽小朋友，大家都在表扬这小姑娘很不错。
+      毫无例外的是，参加这样的会议最重要的还是和大家聊聊，而非纯听。照个面，互通一下
+      想法，如果足够幸运的话还能擦出点火花，最不济也能看到大家笑脸。
+    p.
+      第一天晚上吃饭回来，和达峰聊到招人的事。标准大家可能略有不同，实际操作上无非是
+      技术水平与文化。以前也写过「真正吸引人的，不会是一台 MacBook，也不会是丰盛的下午茶」，
+      文化与前景总是最吸引人的。谈到百姓网与饿了么招人的一些相同和不同点，
+      关于文化、分层、自培养等。看人是一件挺难的事，而招人用人更是难上加难，
+      幸运的是有一群人，他们只要稍加激发，甚至自发，为了自己工作而非某个上级，
+      这群人根本不需要被「用人」。事实上真正应该寻找的是这样的伙伴，如果足够幸运拥有的话。
+    p
+      |另外，今天看到一段非常有趣的关于人的话，分享一下：「Stewart Butterfiled 说
+      |他面试常问的问题是：3 乘以 17 等于多少？说出三个非洲国字名字？法国大革命是哪个世纪的事？
+      |Brian Chesky 在早期会问：如果你收到诊断说只有 12 个月可以活了，那你还会来 Airbnb 工作么？
+      |Peter Thiel 有那个著名的：What important truths do you believe that very few people agree with you on？
+      |我自己常常问的：你人生的一次巅峰体验是什么？上一次最惨烈的分手是怎么回事？你学徒你认识的人里面谁会最恨你？」
+      a(href='http://weibo.com/1977585731/Cr2Yr7peT') #
+      |。
+    p 很多时候当我们成为一个看起来不严肃的人，可能是最严肃的事。我喜欢，也一直这样认为，也可能是借口吧。FYI。
+
+    h3 三、结语
+    p.
+      以前只组织和讲，几乎不听。一是觉得听不到什么内容，一是觉得似乎到一个城市就应该出去玩玩
+      或者聊聊天。这次算是比较认真地在听，不能说就有了多大的收获，算是一种比较不同的感受吧。
+      人老就应该多听听，打算以后多听听大家讲的具体内容。另外是作为一个比较不严肃的人，
+      以后也尝试从技术方面多跟大家聊天，这次休息期间与大家探讨对于没用过的 React 周边有了比较
+      全面入门（姑且这样说吧），再加上一些文章，有了比较客观的认识。另外，尽可能参加会场、会后的聚会。
+
+
+  .container
+
+block scripts
+  script(src='main.js')

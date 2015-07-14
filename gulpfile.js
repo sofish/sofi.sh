@@ -60,7 +60,10 @@ gulp.task('css', function () {
   return gulp.src(cssPath, { base: './' })
     .pipe(cssnext({
       browsers: ['ie > 8', 'chrome > 26', 'Firefox ESR'],
-      plugins: [ require('postcss-nested') ]
+      plugins: [ require('postcss-nested')],
+      import: {
+        path: 'theme/default/css'
+      }
     }))
     .on('error', errorHandler)
     .pipe(gulp.dest('./.dist'));
@@ -76,7 +79,7 @@ gulp.task('lint', function() {
 
 
 // image compress
-var imgPath = ['./article/**/*.@(gif|jpg|svg|png)'];
+var imgPath = ['./article/**/*.@(gif|jpg|svg|png)', './theme/**/*.@(gif|jpg|svg|png)'];
 var imageop = require('gulp-image-optimization');
 gulp.task('image', function(cb) {
   gulp.src(imgPath, {base: './' }).pipe(imageop({
