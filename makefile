@@ -9,6 +9,6 @@ dev: vender clean
 	gulp dev
 
 dist: vender clean
-	gulp dist && gulp api && echo BUILT AT: `date` > build.log && \
-	cat server.log | awk '{ print $1}' | xargs -I{} kill -9 {} \
-	| nohup node server.js > server.log &
+	NODE_ENV=production gulp dist && NODE_ENV=production gulp api && \
+	mv .tmp/* .dist && echo BUILT AT: `date` > build.log && \
+	nohup node server.js > server.log
