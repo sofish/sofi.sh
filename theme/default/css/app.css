@@ -1,5 +1,7 @@
 @import "var.css";
 
+body { padding-top: 50px; background: var(--bgColor);}
+:focus { outline: none; }
 a:hover { text-decoration: none; box-shadow: 0 0.1px 0 #000; }
 pre { border: none; white-space: pre-wrap; }
 iframe, object, embed { max-width: 100%; }
@@ -11,14 +13,30 @@ iframe, object, embed { max-width: 100%; }
 /* add loading state to images */
 [async-src]{ background: url(/theme/default/wave.svg) no-repeat 0 0; background-size: 44px 44px; min-height: 44px; min-width: 44px;}
 
-.container{ width: 80%; max-width: 1000px; padding: 10px; margin: 0 auto; }
+.container{ width: 80%; max-width: 800px; padding: 0 10px; margin: 0 auto; }
 .horizon { position: absolute; left: 50%; transform: translateX(-50%); }
-.center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.center { position: absolute; left: 50%; top: 50%; }
 
-#logo{ padding-top: 56px; }
+/* navigation */
+.nav { position: fixed; height: 44px; line-height: 44px; width: 100%; top:0; left: 0; border-bottom: 1px solid #eee; background: #fff; padding: 0 20px; z-index: 1; font-size: 14px;}
+.nav-item { padding:0 10px; display: inline-block; color: #000; transform: translateZ(0); }
+.nav strong { color: var(--linkColor); }
+
+.search{ position: absolute; right: 0;}
+.search-input{ border: none; display: block; width: 300px; height: 44px; background:none; padding:0 20px;
+  &:focus { background: #f6f6f6; }
+}
+.search-complete { display: none; position: absolute; top: 44px; left: 0; width: 100%; line-height: 1.65; background: #fff;
+  li { padding: 10px 20px; border: 1px solid #f6f6f6; border-width: 1px 5px;
+    &:last-of-type { border-bottom-width: 5px; }
+  }
+}
+
+
+#logo{ padding: 56px 10px 30px; font-size: 40px; font-weight: 900; font-family: serif; }
 
 #gohome { display: block; padding: 5px 20px; text-align: center; color: #fff; background: var(--linkColor); position: fixed; left: 0; top: 0; font-weight: 100; font-size: 0.8em; }
 
-#comment { position: relative; }
+#comment { position: relative; padding: 20px 0; }
 #comment::before { content: '————'; display: block; margin: 30px; color: #eee; text-align: center; }
 #comment-loader { bottom: 20px; cursor: pointer; }

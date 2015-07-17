@@ -4,7 +4,7 @@ block vars
   - description = ''
 
 doctype html
-html
+html.borderbox
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -19,6 +19,17 @@ html
       link(rel='stylesheet', href='/theme/default/css/app.css')
       
   body
+    block nav
+      .nav.serif
+        .search
+          input.search-input(placeholder='搜索...')
+          ul.search-complete
+
+        a.nav-item(href='http://sofi.sh/', title=name) 
+          strong Sofi.sh
+        a.nav-item(href='/about') 关于
+        a.nav-item(href='/sitemap') 网站地图
+
     block logo
       h1.container#logo=name
 
@@ -29,10 +40,10 @@ html
         #comment-loader.horizon.typo-small 点击显示评论
         #disqus_thread
 
-    a#gohome(href='http://sofi.sh/') &larr;首页
-      
     script(src='/theme/default/js/shim.js')
     block scripts
+      script(src='/lib/es6-promise/es6-promise.min.js')
+      script(src='/lib/fetch/fetch.js')
     block tracker
       //- google analytics
       script.

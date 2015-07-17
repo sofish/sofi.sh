@@ -1,7 +1,7 @@
 import { $ } from './helpers';
 
 // comment plugin by disqus
-((loader) => {
+(loader => {
   if(!loader) return;
 
   loader.addEventListener('click', function () {
@@ -26,17 +26,54 @@ import { $ } from './helpers';
 })($('#comment-loader'));
 
 // open external links in new tab
-((externalLinks) => {
-  externalLinks.forEach((link) => link.setAttribute('target', '_blank'));
+(externalLinks => {
+  externalLinks.forEach(link => link.setAttribute('target', '_blank'));
 })($('a:not([href^="http://sofi.sh"])'));
 
 // loader image in async way
-((asyncs) => {
-  asyncs.forEach((async) => {
+(asyncs => {
+  asyncs.forEach(async => {
     async.onload = () => async.removeAttribute('async-src');
     async.src = async.getAttribute('async-src');
   });
 })($('[async-src]'));
+
+((input, complete) => {
+
+  let compose = data => {
+    let tmpl = data => {
+      return `<li>
+        <a href="${data.url}">${data.title}</a><br>
+        <small>${data.description}</small>
+        </li>`;
+    };
+    return data.reduce((ret, cur) => {
+      ret.push(tmpl(cur));
+      return ret;
+    }, []).join('');
+  };
+
+  input.addEventListener('keyup', () => {
+    let val = input.value;
+    if(!val.length || val.length < 2) return complete.style.display = 'none';
+
+    fetch('http://sofi.sh/search/' + val)
+      .then(res => res.json())
+      .then(res => {
+        let text = res.error ? '' : compose(res.data);
+        complete.innerHTML = text;
+        complete.style.display = 'block';
+      })
+      .catch(err => console.log(err));
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => {
+      complete.innerHTML = '';
+      complete.style.display = 'none';
+    }, 200);
+  });
+})($('.nav .search-input')[0], $('.nav .search-complete')[0]);
 
 
 // Array.from
