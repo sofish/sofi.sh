@@ -27,8 +27,10 @@ import { $ } from './helpers';
 
 // open external links in new tab
 (externalLinks => {
-  externalLinks.forEach(link => link.setAttribute('target', '_blank'));
-})($('a:not([href^="http://sofi.sh"])'));
+  externalLinks.forEach(link => {
+    if(!link.href.match(/^https?:\/\/sofi.sh\//)) link.setAttribute('target', '_blank')
+  });
+})($('a'));
 
 // loader image in async way
 (asyncs => {
