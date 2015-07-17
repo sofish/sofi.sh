@@ -11,4 +11,4 @@ dev: vender clean
 dist: vender clean
 	NODE_ENV=production gulp dist && NODE_ENV=production gulp api && \
 	mv .tmp/* .dist && echo BUILT AT: `date` > build.log && \
-	nohup node server.js > server.log&
+	nohup node server.js > server.log &
