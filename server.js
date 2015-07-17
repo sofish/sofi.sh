@@ -8,7 +8,7 @@ var url = require('url');
 http.createServer(function(req, res) {
 
   // build server
-  if(req.path === '/build') {
+  if(req.url.macth(/^\/build/) {
     exec('make dist', function(err) {
       var message = err ? err.message : 'build success';
       res.write(message);
