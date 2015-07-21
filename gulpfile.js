@@ -93,6 +93,7 @@ gulp.task('image', function(cb) {
 
 // build api from html files
 var fs = require('fs');
+var excludeList = ['/home', '/about', '/sitemap', '/archive'];
 var reg = {
   title: /<title>([^<]+)<\/title>/,
   description: /<meta name="description"[^=]+="([^"]+)"/
@@ -105,6 +106,7 @@ gulp.task('api', ['template'], function() {
     var dist = DEST.slice(2);
 
     files.forEach(function(file) {
+      if(file.match('/article/sitemap/')) return;
       var text = fs.readFileSync(file, 'utf-8');
 
       // git 不存文件的生成 / 更新时间
@@ -139,9 +141,46 @@ gulp.task('api', ['template'], function() {
       var mkdirp = require('mkdirp');
       mkdirp.sync(dir);
     }
-    fs.writeFileSync(dir + '/article.json', JSON.stringify(articles));
+
+    fs.writeFileSync(dir + '/sitemap.json', JSON.stringify(articles));
+
+    // remove pages from exclude list
+    articles = articles.filter(function(item) {
+      return excludeList.indexOf(item.url) === -1;
+    });
+    fs.writeFileSync(dir + '/article.json', JSON.stringify(articles.slice(0, 5)));
   }).on('error', errorHandler);
-})
+});
+
+
+// build sitemap
+gulp.task('sitemap', ['api'], function() {
+  var items = require(DEST + '/api/sitemap.json');
+  var urlsets = '';
+
+  items.forEach(function(item) {
+    var freq = excludeList.indexOf(item.url) === -1 ? 'monthly' : 'weekly';
+    urlsets += `\n<url>
+      <loc>http://sofi.sh${item.url}</loc>
+      <lastmod>${item.updatedAt}</lastmod>
+      <changefreq>${freq}</changefreq>
+   </url>`;
+  });
+
+  var sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urlsets}
+    </urlset>`;
+
+  var dir = DEST + '/article/sitemap';
+  if(!fs.existsSync(dir)) {
+    var mkdirp = require('mkdirp');
+    mkdirp.sync(dir);
+  }
+
+  fs.writeFileSync(dir + '/sitemap.xml', sitemap);
+});
+
 
 // clean .dist dir
 var clean = require('gulp-clean');
@@ -150,8 +189,9 @@ gulp.task('clean', function () {
     .pipe(clean());
 });
 
+
 // watcher for development
-gulp.task('dev', ['js', 'css', 'image', 'api'], function() {
+gulp.task('dev', ['js', 'css', 'image', 'sitemap'], function() {
 
   gulp.watch(jsPath, ['js', 'lint']);
   gulp.watch(cssPath, ['css']);
@@ -163,4 +203,4 @@ gulp.task('dev', ['js', 'css', 'image', 'api'], function() {
 
 
 // build for production
-gulp.task('dist', ['api', 'js', 'css', 'image']);
+gulp.task('dist', ['sitemap', 'js', 'css', 'image']);
