@@ -93,7 +93,7 @@ gulp.task('image', function(cb) {
 
 // build api from html files
 var fs = require('fs');
-var excludeList = ['/home', '/about', '/sitemap'];
+var excludeList = ['/home', '/about', '/sitemap', '/archive'];
 var reg = {
   title: /<title>([^<]+)<\/title>/,
   description: /<meta name="description"[^=]+="([^"]+)"/
@@ -152,11 +152,12 @@ gulp.task('api', ['template'], function() {
   }).on('error', errorHandler);
 });
 
+
 // build sitemap
 gulp.task('sitemap', ['api'], function() {
   var items = require(DEST + '/api/sitemap.json');
   var urlsets = '';
-console.log(items);
+
   items.forEach(function(item) {
     var freq = excludeList.indexOf(item.url) === -1 ? 'monthly' : 'weekly';
     urlsets += `\n<url>
@@ -181,14 +182,13 @@ console.log(items);
 });
 
 
-
-
 // clean .dist dir
 var clean = require('gulp-clean');
 gulp.task('clean', function () {
   return gulp.src(['.dist', '.tmp'], { read: false })
     .pipe(clean());
 });
+
 
 // watcher for development
 gulp.task('dev', ['js', 'css', 'image', 'sitemap'], function() {
@@ -200,6 +200,7 @@ gulp.task('dev', ['js', 'css', 'image', 'sitemap'], function() {
   // watch jade file in `theme/`, but dont convert it to html
   gulp.watch(jadePath.concat('./theme/**/*.jade'), ['api']);
 });
+
 
 // build for production
 gulp.task('dist', ['sitemap', 'js', 'css', 'image']);
