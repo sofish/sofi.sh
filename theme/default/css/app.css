@@ -13,7 +13,7 @@ iframe, object, embed { max-width: 100%; }
 /* add loading state to images */
 [async-src]{ background: url(/theme/default/img/wave.svg) no-repeat 0 0; background-size: 44px 44px; min-height: 44px; min-width: 44px;}
 
-.container{ width: 80%; max-width: 800px; padding: 0 10px; margin: 0 auto; }
+.container{ width: 90%; max-width: 800px; padding: 0 10px; margin: 0 auto; }
 .horizon { position: absolute; left: 50%; transform: translateX(-50%); }
 .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center;}
 .up { top: 40%; }
