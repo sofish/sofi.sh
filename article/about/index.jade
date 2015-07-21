@@ -1,0 +1,35 @@
+block append vars
+  - name = '关于 sofish';
+  - description = '写点代码，聊聊天'
+  
+extends ../../theme/default/index
+
+block content
+  .container.typo
+    p
+      |平时大家都叫我小鱼，当然因为年纪原因叫鱼爷爷的也有。养了一只猫，他叫猫小咪，大概 13 斤，掉毛的时候挺讨厌的，总的来说挺傻的。
+      |目前有几份工作：一份正式，其他都是免费全职。正式的是作为一名工程师在饿了么工作，平时主要处理一些前端方面的内容，
+      |比如招聘、请吃饭、带大家一起出去玩儿，当然也写代码，虽然现在每天能写 3 个小时间就感觉很幸福。非正式的是：猫的铲屎工、
+      a(href='http://appled.cc') 水果店
+      |&nbsp;的无证程序员。
+    p.
+      工作之余/间，喜欢在微博、微信念叨两句，所以不用关注我。如果愿意，倒是可以聊聊代码上的东西，但一般只接受 GitHub 上的 issues 或
+      pull-request。
+
+    p.github-card(data-github='sofish', data-width='400')
+
+    p
+      |总的来说就是，假设你对我有兴趣，其实也可以不用联系我，除非不得不联系，就那&nbsp;
+      a(href='mailto:sofish@icloud.com') 写封邮件
+      |&nbsp;吧。
+
+    p
+      |看完果断回到首页去，猛击&nbsp;
+      a(href='http://sofi.sh/') sofi.sh
+      |&nbsp;&rarr;
+
+block append scripts
+  script(src='//cdn.jsdelivr.net/github-cards/latest/widget.js')
+
+block comments
+block footer
