@@ -129,6 +129,11 @@ gulp.task('api', ['template'], function() {
       });
     });
 
+    var excludeList = ['/home', '/about', '/sitemap'];
+    articles = articles.filter(function(item) {
+      return excludeList.indexOf(item.url) === -1;
+    });
+
     // sort articles by birthtime
     articles.sort(function(a, b) {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
