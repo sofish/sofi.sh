@@ -13,10 +13,10 @@
     "tests"
   ],
   "dependencies": {
-    "typo.css": "~2.1.2"
-  },
-  "devDependencies": {
+    "typo.css": "~2.1.2",
     "fetch": "~0.9.0",
-    "es6-promise": "~2.2.0"
+    "es6-promise": "~2.2.0",
+    "pen": "~0.2.1",
+    "to-markdown": "~1.2.1"
   }
 }

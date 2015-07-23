@@ -1,0 +1,20 @@
+@import "var.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background-color:#ecf0f1; height: 100%; font-size: 16px;}
+.close { border: none; background: none;  }
+
+#writer{ min-height: 100%; }
+#show {
+  height: 100%; width: 100%; position: fixed; top: 0; left: 0; background: #bdc3c7; opacity: 0.95; display: none; padding: 3em; overflow: auto;
+  .close { color: #999; font-size: 30px; position: fixed; top: 24px; right: 36px; font-family: courier; opacity: 80%; }
+  &.active{ display: block; }
+  pre { background: none; max-width: 100%; font-family: consolas; }
+}
+
+#utilities {
+  position: fixed; top: 2em; right: 2em;
+  button, img { display: inline-block; height: 24px; line-height: 24px; text-align: center; vertical-align: middle; margin-left: 0.3em; }
+  button { background: none; color: #333; border: 1px solid #aaa; text-transform: uppercase; border-radius: 3px; line-height: 1; }
+  img { width: 18px; height: 18px; margin-left: 3em; }
+}

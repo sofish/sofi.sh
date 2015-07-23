@@ -1,0 +1,31 @@
+block append vars
+  - description = 'a WYSIWYG editor for everyone';
+  - name = 'Writter' + ' - ' + description;
+  - bodyClass = 'pen';
+
+extends ../../theme/default/index
+
+block nav
+block logo
+block styles
+  link(rel='stylesheet', href='/theme/default/css/app.css')
+  link(rel='stylesheet', href='/lib/pen/src/pen.css')
+  link(rel='stylesheet', href='./main.css')
+block content
+  #utilities
+    button#tohtml(title='export html') html
+    button#tomd(title='export markdown') md
+    img#fullscreen(src='./enter.svg', alt='enter full screen')
+
+  .container#writer
+    p
+      i Type something here...
+
+block append scripts
+  script(src='/lib/pen/src/pen.js')
+  script(src='/lib/pen/src/markdown.js')
+  script(src='/lib/to-markdown/dist/to-markdown.js')
+  script(src='./main.js')
+block comments
+block footer
+                                 

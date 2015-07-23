@@ -41,6 +41,7 @@ import { $ } from './helpers';
 })($('[async-src]'));
 
 ((input, complete) => {
+  if(!input) return;
 
   let compose = data => {
     let tmpl = data => {
