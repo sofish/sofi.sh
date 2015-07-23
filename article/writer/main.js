@@ -22,7 +22,7 @@ const show = (content) => {
   layer.classList.add('active');
 
   layer.addEventListener('click', e => {
-    if(e.target.className.includes('close')) layer.classList.remove('active');
+    if(e.target.className.match('close')) layer.classList.remove('active');
   });
 };
 

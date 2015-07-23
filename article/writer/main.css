@@ -3,12 +3,14 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { background-color:#ecf0f1; height: 100%; font-size: 16px;}
 .close { border: none; background: none;  }
+.copyright { position: fixed; bottom: 2em; right: 2em; font-style: italic; }
 
 #writer{ min-height: 100%; }
 #show {
-  height: 100%; width: 100%; position: fixed; top: 0; left: 0; background: #bdc3c7; opacity: 0.95; display: none; padding: 3em; overflow: auto;
-  .close { color: #999; font-size: 30px; position: fixed; top: 24px; right: 36px; font-family: courier; opacity: 80%; }
-  &.active{ display: block; }
+  width: 100%; height: 100%; position: fixed; bottom: -100%; left: 0; background: #bdc3c7; opacity: 0.95; padding: 3em; overflow: auto;
+  transition: bottom 0.1s ease-in; transform: translateZ(0);
+  .close { color: #999; font-size: 44px; position: absolute; top: 24px; right: 36px; font-family: courier; opacity: 80%; }
+  &.active{ bottom: 0; }
   pre { background: none; max-width: 100%; font-family: consolas; }
 }
 
