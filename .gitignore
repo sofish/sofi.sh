@@ -2,4 +2,5 @@
 .dist
 *.log
 .DS_Store
+.tmp
 node_modules/
