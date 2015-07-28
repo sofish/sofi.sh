@@ -38,8 +38,21 @@ let options = {
 let editor = new Pen(options);
 $writer.focus();
 
+// words count
+let $count = $('#count');
+let count = () => {
+  console.log($writer, $writer.textContent);
+  let length = $writer.textContent.length;
+  $count.textContent = length;
+  console.log(length, 1);
+};
+count();
+
 // auto save
-let save = () => localStorage.setItem('content', editor.getContent());
+let save = () => {
+  localStorage.setItem('content', editor.getContent());
+  count();
+};
 $writer.addEventListener('keyup', save);
 window.onbeforeunload = save;
 

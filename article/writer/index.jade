@@ -1,6 +1,6 @@
 block append vars
   - description = 'a WYSIWYG editor for everyone';
-  - name = 'Writter' + ' - ' + description;
+  - name = 'Writer' + ' - ' + description;
   - bodyClass = 'pen';
 
 extends ../../theme/default/index
@@ -16,6 +16,7 @@ block content
     button#tohtml(title='export html') html
     button#tomd(title='export markdown') md
     img#fullscreen(src='./enter.svg', alt='enter full screen')
+    #count
 
   .container#writer
     p

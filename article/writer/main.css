@@ -6,6 +6,9 @@ html, body { background-color:#ecf0f1; height: 100%; font-size: 16px;}
 .copyright { position: fixed; bottom: 2em; right: 2em; font-style: italic; }
 
 #writer{ min-height: 100%; }
+#count { position: fixed; bottom: 2em; left: 2em; font-size: 0.8em; color: #999;
+  &::before{ content: 'count: '; }
+}
 #show {
   width: 100%; height: 100%; position: fixed; bottom: -100%; left: 0; background: #bdc3c7; opacity: 0.95; padding: 3em; overflow: auto;
   transition: bottom 0.1s ease-in; transform: translateZ(0);
