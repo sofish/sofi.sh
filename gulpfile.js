@@ -17,12 +17,19 @@ var config = require('./config');
 // build jade to html
 var jade = require('gulp-jade');
 var jadePath = ['./article/**/*.jade', './theme/**/404.jade', './theme/**/500.jade'];
-gulp.task('template', function() {
+gulp.task('template', ['html'], function() {
   return gulp.src(jadePath, { base: './' })
     .pipe(jade({ locals: config }))
     .on('error', errorHandler)
     .pipe(gulp.dest(DEST));
 });
+
+// copy html to dest
+gulp.task('html', function() {
+  return gulp.src(['./article/**/*.html'], { base: './'})
+    .pipe(gulp.dest(DEST));
+});
+
 
 
 // load js with babel loader
@@ -83,12 +90,13 @@ gulp.task('lint', function() {
 var imgPath = ['./article/**/*.@(gif|jpg|svg|png)', './theme/**/*.@(gif|jpg|svg|png)'];
 var imageop = require('gulp-image-optimization');
 gulp.task('image', function(cb) {
-  gulp.src(imgPath, {base: './' }).pipe(imageop({
-    optimizationLevel: 5,
-    progressive: true,
-    interlaced: true
-  }))
-  .pipe(gulp.dest(DEST)).on('end', cb).on('error', cb);
+  gulp.src(imgPath, {base: './' })
+    //.pipe(imageop({
+    //  optimizationLevel: 5,
+    //  progressive: true,
+    //  interlaced: true
+    //}))
+    .pipe(gulp.dest(DEST)).on('end', cb).on('error', cb);
 });
 
 // build api from html files
