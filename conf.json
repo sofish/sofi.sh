@@ -1,0 +1,6 @@
+{
+  "PORT": 3705,
+  "MONGODB": {
+    "uri": "mongodb://localhost:27017/sofi_sh"
+  }
+}
