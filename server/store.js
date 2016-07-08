@@ -46,11 +46,11 @@ export function composeWithSchema(schema, obj) {
     switch (true) {
       // required
       case schema[key].required && !obj.hasOwnProperty(key):
-        throw Helper.error(500, `${key} is required`);
+        throw Helper.error(500, `\`${key}\` is required`);
 
       // check type
       case schema[key].required && !Helper.compareType(schema[key].type(), obj[key]):
-        throw Helper.error(500, `${key} should be a ${Helper.is(schema[key].type())}`);
+        throw Helper.error(500, `\`${key}\` should be a ${Helper.is(schema[key].type())}`);
 
       // default value
       case !obj.hasOwnProperty(key):
@@ -80,6 +80,6 @@ export function validSchema(key, value, schema) {
   if(type && Helper.is(value) === type.name) {
     return {key: key, value: value};
   } else {
-    throw Helper.error(500, `${key} should be a(n) ${type.name}`);
+    throw Helper.error(500, `\`${key}\` should be a(n) ${type.name}`);
   }
 }
