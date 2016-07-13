@@ -47,28 +47,28 @@ describe('user.js: CRUD', function() {
   });
 
   it('[R] a single user should an object', function(done) {
-    Helper.send('GET', `/user/${user.id}`).then(function(res) {
+    Helper.send('GET', `/user/${user.name}`).then(function(res) {
       assert.equal(res.name, TEST_USER);
       done();
     }).catch(done);
   });
 
   it('[U] `role` should be a number', function(done) {
-    Helper.send('PATCH', `/user/${user.id}`, {role: "1"}).then(function(res) {
+    Helper.send('PATCH', `/user/${user.name}`, {role: "1"}).then(function(res) {
       assert.equal(res.error, '`role` should be a(n) Number');
       done();
     }).catch(done);
   });
 
   it('[U] `password` should be a string', function(done) {
-    Helper.send('PATCH', `/user/${user.id}`, {password: 1}).then(function(res) {
+    Helper.send('PATCH', `/user/${user.name}`, {password: 1}).then(function(res) {
       assert.equal(res.error, '`password` should be a(n) String');
       done();
     }).catch(done);
   });
 
   it('[D] delete a user', function(done) {
-    Helper.send('DELETE', `/user/${user.id}`).then(function(res) {
+    Helper.send('DELETE', `/user/${user.name}`).then(function(res) {
       assert.equal(res.success, 1);
       done();
     }).catch(done);

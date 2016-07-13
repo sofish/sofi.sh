@@ -2,20 +2,25 @@ import koa from 'koa';
 import mongodb from 'mongodb';
 import morgan from 'koa-morgan';
 import bodyparser from 'koa-bodyparser';
+import helmet from 'koa-helmet';
 import route from './router';
 
 // app configuration
 const conf = require('../conf');
 const app = koa();
 
+app.keys = conf.KEYS;
+
 // print error to stdout
 app.on('error', function (err, ctx) {
-  let flag = '\n====================\nMIDDLEWARE_ERROR: \n====================\n';
-  console.log(flag, err);
+  console.log('MIDDLEWARE_ERROR: ', err);
 });
 
 // log request
 app.use(morgan.middleware('dev'));
+
+// secure: proper header with helmet
+app.use(helmet());
 
 // error handler
 app.use(function *(next) {
@@ -35,12 +40,6 @@ app.use(bodyparser());
 
 // routers
 app.use(route.routes()).use(route.allowedMethods());
-
-// 404
-app.use(function *(next) {
-  if(this.status === 404) this.body = {error: this.message};
-  yield next;
-});
 
 // start the app
 app.listen(conf.PORT, () => console.log(`server is running on localhost:${conf.PORT}`));

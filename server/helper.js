@@ -30,15 +30,3 @@ export function compareType(a, b) {
 export function is(obj) {
   return Object.prototype.toString.call(obj).slice(8, -1);
 }
-
-/**
- * Compose an error with status
- * @param message
- * @param code
- * @returns {Error}
- */
-export function error(code, message) {
-  var err = new Error(message || '');
-  err.status = typeof code  === 'number' ? code : 500;
-  return err;
-}

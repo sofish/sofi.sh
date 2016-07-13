@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import shortid from 'shortid';
+import httpAssert from 'http-assert';
 import * as Helper from './helper';
 
 const SALT_ROUND = 10;
@@ -12,8 +13,7 @@ const SALT_ROUND = 10;
  */
 export function collection(ctx, collectionName) {
   var db = ctx.app.context.db;
-  if(!db) throw Helper.error(503);
-
+  httpAssert(db, 503);
   return db.collection(collectionName);
 };
 
@@ -46,11 +46,11 @@ export function composeWithSchema(schema, obj) {
     switch (true) {
       // required
       case schema[key].required && !obj.hasOwnProperty(key):
-        throw Helper.error(500, `\`${key}\` is required`);
+        this.throw(500, `\`${key}\` is required`);
 
       // check type
       case schema[key].required && !Helper.compareType(schema[key].type(), obj[key]):
-        throw Helper.error(500, `\`${key}\` should be a ${Helper.is(schema[key].type())}`);
+        this.throw(500, `\`${key}\` should be a ${Helper.is(schema[key].type())}`);
 
       // default value
       case !obj.hasOwnProperty(key):
@@ -77,9 +77,6 @@ export function validSchema(key, value, schema) {
   if(!schema.hasOwnProperty(key)) return null;
 
   var type = schema[key].type;
-  if(type && Helper.is(value) === type.name) {
-    return {key: key, value: value};
-  } else {
-    throw Helper.error(500, `\`${key}\` should be a(n) ${type.name}`);
-  }
+  httpAssert(type && Helper.is(value) === type.name, 500, `\`${key}\` should be a(n) ${type.name}`);
+  return {key: key, value: value};
 }

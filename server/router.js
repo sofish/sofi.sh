@@ -6,17 +6,18 @@ import * as user from './user';
 const route = router();
 
 route.get('/article/:id?', article.read);
-route.post('/article', article.create);
-route.patch('/article/:id', article.update);
-route.delete('/article/:id', article.del);
+route.post('/article', user.auth, user.role(2), article.create);
+route.patch('/article/:id', user.auth, user.role(1), article.update);
+route.delete('/article/:id', user.auth, user.role(1), article.del);
 
 route.get('/comment/:id?', comment.read);
-route.post('/comment', comment.create);
-route.delete('/comment/:id', comment.del);
+route.post('/comment', user.auth, comment.create);
+route.delete('/comment/:id', user.auth, user.role(1), comment.del);
 
-route.get('/user/:id?', user.read);
+route.get('/user/:name?', user.read);
 route.post('/user', user.create);
-route.patch('/user/:id', user.update);
-route.delete('/user/:id', user.del);
+route.patch('/user/:name', user.auth, user.role(1), user.update);
+route.delete('/user/:name', user.auth, user.role(1), user.del);
+route.post('/auth', user.auth);
 
 export default route;
