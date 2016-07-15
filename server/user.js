@@ -1,11 +1,15 @@
 import * as Store from './store';
 import * as Helper from './helper';
+import verify from './recaptcha';
 
 const ROLES = [1, 2, 3]; // reader, writer, admin
 const schema = {
   name: {
     type: String,
-    required: true
+    required: true,
+    length: [5],
+    pattern: /^\S+$/,
+    message: '`name` required at least 5 characters without space'
   },
   role: {
     type: Number,
@@ -42,12 +46,14 @@ export function *read(next) {
 
 export function *create(next) {
   var user = this.request.body;
+  var reCaptcha = yield verify(user.recaptcha);
+  this.assert(reCaptcha.success, 401, 'human?');
+
   var collection = Store.collection(this, 'user');
-
   var right = yield collection.find({name: user.name}).limit(1).next();
-  this.assert(right, 500, `you can't use the name: \`${user.name}\``);
+  this.assert(!right, 500, `you can't use the name: \`${user.name}\``);
 
-  var ret = Store.composeWithSchema(schema, user);
+  var ret = Store.composeWithSchema(user, schema);
   ret = yield collection.insert(ret);
   this.body = userFilter(ret.ops[0]);
 }
@@ -59,7 +65,7 @@ export function *update(next) {
   var change = {};
 
   for(let key in patch) {
-    var ret = Store.validSchema(key, patch[key], schema);
+    var ret = Store.validSchema(key, patch, schema);
     if(!ret) continue;
     change[key] =
       key === 'password' ? Store.hash(patch[key]) :
@@ -86,7 +92,11 @@ export function *del(next) {
  */
 export function *auth(next) {
   var user = this.request.body;
+  this.assert(user.recaptcha, 400, 'reCaptcha not found');
   this.assert(user.name && user.password, 401);
+  
+  var reCaptcha = yield verify(user.recaptcha);
+  this.assert(reCaptcha.success, 401, 'human?');
 
   var realUser = yield Store.collection(this, 'user').find({name: user.name}).next();
   this.assert(realUser, 401);
@@ -102,7 +112,8 @@ export function *auth(next) {
   this.cookies.set('n', realUser.name, options);  // n represent for name
   this.cookies.set('r', realUser.role, options);   // r represent for role
 
-  return yield next;
+  yield next;
+  this.body = {authenticated: 1};
 }
 
 /**

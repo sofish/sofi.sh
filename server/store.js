@@ -36,32 +36,20 @@ export function compare(origin, hash) {
 
 /**
  * Compose a new object base on the schema and origin object
- * @param schema
  * @param obj
+ * @param schema
  * @returns {Object} error / result object
  */
-export function composeWithSchema(schema, obj) {
+export function composeWithSchema(obj, schema) {
   var ret = {};
   for (let key in schema) {
-    switch (true) {
-      // required
-      case schema[key].required && !obj.hasOwnProperty(key):
-        this.throw(500, `\`${key}\` is required`);
-
-      // check type
-      case schema[key].required && !Helper.compareType(schema[key].type(), obj[key]):
-        this.throw(500, `\`${key}\` should be a ${Helper.is(schema[key].type())}`);
-
-      // default value
-      case !obj.hasOwnProperty(key):
-        ret[key] = schema[key].default;
-    }
+    let tmp = validSchema(key, obj, schema);
 
     // ignore
-    if(Helper.is(obj[key]) === 'Undefined') continue;
+    if(!tmp) continue;
 
     // hard core for `password`
-    ret[key] = key === 'password' ? hash(obj[key]) : obj[key];
+    ret[key] = key === 'password' ? hash(tmp.value) : tmp.value;
   }
 
   // add shortid and createdAt
@@ -72,11 +60,53 @@ export function composeWithSchema(schema, obj) {
   return ret;
 }
 
-export function validSchema(key, value, schema) {
+/**
+ * valid schema
+ * @param key
+ * @param obj
+ * @param schema
+ * @returns {*}
+ */
+export function validSchema(key, obj, schema) {
   // ignore
   if(!schema.hasOwnProperty(key)) return null;
 
-  var type = schema[key].type;
-  httpAssert(type && Helper.is(value) === type.name, 500, `\`${key}\` should be a(n) ${type.name}`);
-  return {key: key, value: value};
+  switch (true) {
+    // required
+    case schema[key].required && !obj.hasOwnProperty(key):
+      httpAssert(false, 500, `\`${key}\` is required`);
+
+    // check type
+    case obj.hasOwnProperty(key) && !Helper.compareType(schema[key].type(), obj[key]):
+      httpAssert(false, 500, `\`${key}\` should be a ${Helper.is(schema[key].type())}`);
+
+    // check length
+    case obj.hasOwnProperty(key) && schema[key].length:
+      checkLength(obj[key], schema[key].length, key);
+
+    // check pattern
+    case obj.hasOwnProperty(key) && schema[key].pattern:
+      httpAssert(schema[key].pattern.test(obj[key]), 500, schema[key].message || `\`${key}\` is not valid`);
+
+    // default value
+    case !obj.hasOwnProperty(key) && schema[key].hasOwnProperty('default'):
+      obj[key] = schema[key].default;
+  }
+
+  return {key: key, value: obj[key]};
+}
+
+
+/**
+ * check if str.length is in range
+ * @param str
+ * @param range
+ * @returns {*}
+ */
+function checkLength(str, range, key) {
+  if(!range.length) return true;
+  var [min, max] = range;
+  min = min ? (str.length >= min) : true;
+  max = max ? (str.length <= max) : true;
+  assert(min && max, 500, `\`${key}\` length is too ${!min ? 'short' : 'long'}`);
 }

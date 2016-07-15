@@ -3,5 +3,9 @@
   "MONGODB": {
     "uri": "mongodb://localhost:27017/sofi_sh"
   },
-  "KEYS": ["sofi.sh", "c.iao"]
+  "KEYS": ["sofi.sh", "c.iao"],
+  "RECAPTCHA": {
+    "uri": "https://www.google.com/recaptcha/api/siteverify",
+    "secret": "6Ld47iQTAAAAAMrra9ucqADGjOZrto2gKO9KCyOw"
+  }
 }
