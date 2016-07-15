@@ -30,7 +30,7 @@ app.use(function *(next) {
     yield next;
   } catch (err) {
     this.status = err.status || 500;
-    this.body = app.env.match(/^development|test$/) ? {error: err.message || this.message || err} : {error: this.message};
+    this.body = {error: err.message || this.message || err};
     this.app.emit('error', err, this);
   }
 });

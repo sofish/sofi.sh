@@ -36,9 +36,10 @@ export function *read(next) {
   yield role(3);
 
   // user list
+  var sort = {};
   var skip = +this.query.skip || 0;
   var limit = +this.query.limit || 20;
-  var sort = +this.query.sort || 'createdAt';
+  sort[this.query.sort || 'createdAt'] = -1;
 
   var users = yield collection.find({}, {skip, limit, sort}).toArray();
   this.body = users.map(userFilter);
@@ -92,9 +93,9 @@ export function *del(next) {
  */
 export function *auth(next) {
   var user = this.request.body;
-  this.assert(user.recaptcha, 400, 'reCaptcha not found');
+  this.assert(user.recaptcha, 401, 'reCaptcha not found');
   this.assert(user.name && user.password, 401);
-  
+
   var reCaptcha = yield verify(user.recaptcha);
   this.assert(reCaptcha.success, 401, 'human?');
 
