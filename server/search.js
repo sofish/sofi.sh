@@ -46,9 +46,11 @@ export function *search() {
   var limit = +this.query.limit || 20;
 
   var collection = Store.collection(this, 'article');
-  var articles = yield collection.find({
-    $text: {$search: q}
-  }, {score: {$meta: 'textScore'}}, {skip, limit, sort}).toArray();
+  var articles = yield collection.find(
+    {$text: {$search: q}},            // weights: ../bin.db.js
+    {score: {$meta: 'textScore'}},    // ranking: sort with score
+    {skip, limit, sort}
+  ).toArray();
 
   this.body = articles.map(article => Helper.filter(['_id'], article));
 }
