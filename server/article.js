@@ -21,10 +21,12 @@ const schema = {
 };
 
 export function *read(next) {
-  var id = this.params.id;
+  var title = this.params.title;
   var collection = Store.collection(this, 'article');
+  var id = title && title.slice(-8);
 
   if(id) {
+    this.assert(/\w{8}/.test(id), 404);
     var article = yield collection.find({id}).limit(1).next();
     this.assert(article, 404);
     return this.body = Helper.filter(['_id'], article);
@@ -51,14 +53,20 @@ export function *create(next) {
 }
 
 export function *update(next) {
-  var id = this.params.id;
+  var title = this.params.title;
   var patch = this.request.body;
+  var id = title.slice(-8);
 
   // delete author
   delete patch.author;
 
   var collection = Store.collection(this, 'article');
   var change = {};
+
+  if(id) {
+    var article = yield collection.find({id}).limit(1).next();
+    this.assert(article, 404);
+  }
 
   for(let key in patch) {
     var ret = Store.validSchema(key, patch, schema);

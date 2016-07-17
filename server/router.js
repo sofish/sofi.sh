@@ -5,10 +5,10 @@ import * as user from './user';
 
 const route = router();
 
-route.get('/article/:id?', article.read);
+route.get('/article/:title?', article.read);
 route.post('/article', user.role(2), article.create);
-route.patch('/article/:id', user.role(1), article.update);
-route.delete('/article/:id', user.role(1), article.del);
+route.patch('/article/:title', user.role(1), article.update);
+route.delete('/article/:title', user.role(1), article.del);
 
 route.get('/comment/:id?', comment.read);
 route.post('/comment', user.role(1), comment.create);

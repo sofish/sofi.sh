@@ -65,6 +65,11 @@ export function *update(next) {
   var collection = Store.collection(this, 'user');
   var change = {};
 
+  if(name) {
+    var article = yield collection.find({name}).limit(1).next();
+    this.assert(article, 404);
+  }
+
   for(let key in patch) {
     var ret = Store.validSchema(key, patch, schema);
     if(!ret) continue;
