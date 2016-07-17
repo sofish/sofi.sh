@@ -1,5 +1,6 @@
 import * as Helper from './helper';
 import * as Store from './store';
+import * as User from './user';
 
 const schema = {
   content: {
@@ -17,23 +18,28 @@ const schema = {
 };
 
 export function *read(next) {
-  var id = this.params.id;
+  var articleId = this.params.articleId;
   var collection = Store.collection(this, 'comment');
+  this.assert(articleId, 400, 'missing article id');
 
-  if(id) {
-    let comment = yield collection.find({id}).limit(1).next();
-    this.assert(comment, 404);
-    return this.body = Helper.filter(['_id'], comment);
-  }
-
-  // comment list
   var sort = {};
   var skip = +this.query.skip || 0;
   var limit = +this.query.limit || 20;
   sort[this.query.sort || 'createdAt'] = -1;
 
-  var comments = yield collection.find({}, {skip, limit, sort}).toArray();
-  this.body = comments.map(comment => Helper.filter(['_id'], comment));
+  var comments = yield collection.find({article: articleId}, {skip, limit, sort}).toArray();
+  var ret = [];
+
+  for(let comment of comments) {
+    this.params.name = comment.author;
+    let author = yield User.read.call(this);
+    author = author || {};
+    comment.author = Helper.filter(['lastModified', 'createdAt'], author);
+    comment = Helper.filter(['_id', 'article'], comment);
+    ret.push(comment);
+  }
+
+  this.body = ret;
 }
 
 export function *create(next) {

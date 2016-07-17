@@ -1,5 +1,6 @@
 import * as Helper from './helper';
 import * as Store from './store';
+import * as User from './user';
 
 const schema = {
   title: {
@@ -29,7 +30,14 @@ export function *read(next) {
     this.assert(/\w{8}/.test(id), 404);
     var article = yield collection.find({id}).limit(1).next();
     this.assert(article, 404);
-    return this.body = Helper.filter(['_id'], article);
+
+    article = Helper.filter(['_id'], article);
+
+    this.params.name = article.author;
+    var author = yield User.read.call(this);
+    author = author || {};
+    article.author = author;
+    return this.body = article;
   }
 
   // article list
