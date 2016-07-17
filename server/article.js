@@ -1,7 +1,9 @@
 import * as Helper from './helper';
 import * as Store from './store';
 import * as User from './user';
+import * as Search from './search';
 
+const FILTERS = {};
 const schema = {
   title: {
     type: String,
@@ -21,10 +23,49 @@ const schema = {
   }
 };
 
+FILTERS.related = function *related(id) {
+  var collection = Store.collection(this, 'article');
+  var article = yield collection.find({id}).limit(1).next();
+  if(!article) return [];
+
+  this.params.tags = article.tags.join('|');
+  this.request.query.limit = this.request.query.limit || '3';
+  return yield Search.tag.call(this);
+};
+
+FILTERS.prevAndNext = function *prevAndNext(id) {
+  var collection = Store.collection(this, 'article');
+  var article = yield collection.find({id}).limit(1).next();
+  if(!article) return this.body = {previous: null, next: null};
+
+  var next = yield collection.find({_id: {$gt: article._id}}).limit(1).next();
+  var previous = yield collection.find({_id: {$lt: article._id}}).limit(1).next();
+
+  if(next) {
+    this.params.name = next.author;
+    next.author = yield User.read.call(this);
+    next.author = Helper.filter(['lastModified', 'createdAt'], next.author);
+  } else if (previois) {
+    this.params.name = previous.author;
+    previous.author = yield User.read.call(this);
+    previous.author = Helper.filter(['lastModified', 'createdAt'], previous.author);
+  }
+
+  this.body = {previous, next};
+};
+
 export function *read(next) {
   var title = this.params.title;
+  var filter = this.params.filter;
   var collection = Store.collection(this, 'article');
   var id = title && title.slice(-8);
+
+  // filters like related, previous, next article
+  if(filter) {
+    let f = FILTERS[filter];
+    this.assert(f, 404, `filter: \`${filter}\` not found`);
+    return yield f.call(this, id);
+  }
 
   if(id) {
     this.assert(/\w{8}/.test(id), 404);

@@ -3,10 +3,11 @@ import * as Helper from './helper';
 
 // articles with a specific tag
 export function *tag() {
-  var tag = this.params.name;
+  var tags = this.params.tags;
   var collection = Store.collection(this, 'article');
-
-  this.assert(tag, 400, 'missing tag name');
+  
+  this.assert(tags, 400, 'missing tag(s) name');
+  tags = tags.split('|').map(tag => tag);
 
   var sort = {};
   var skip = +this.query.skip || 0;
@@ -14,7 +15,7 @@ export function *tag() {
   sort[this.query.sort || 'createdAt'] = -1;
 
   var articles = yield collection.find({tags: {
-    $in: [tag]
+    $in: tags
   }}, {limit, sort, skip}).toArray();
 
   this.body = articles.map(article => Helper.filter(['_id'], article));

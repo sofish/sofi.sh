@@ -8,14 +8,17 @@ co(function *() {
 
   // remove previous index
   yield article.dropIndexes({'articleTextIndex': 1});
+  yield article.dropIndexes({'id': 1});
 
   // re-index
-  yield article.createIndex({
-    title: 'text', content: 'text'
-  }, {
-    weights: {title: 5, content: 2},
-    name: 'articleTextIndex'
-  });
+  yield article.createIndex(
+    {id: true},
+    {name: 'id'}
+  );
+  yield article.createIndex(
+    {title: 'text', content: 'text'},
+    {weights: {title: 5, content: 2}, name: 'articleTextIndex'}
+  );
 
   // close db
   yield db.close();

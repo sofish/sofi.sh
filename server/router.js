@@ -7,7 +7,7 @@ import * as search from './search';
 
 const route = router();
 
-route.get('/article/:title?', article.read);
+route.get('/article/:title?/:filter?', article.read);
 route.post('/article', user.role(2), article.create);
 route.patch('/article/:title', user.role(1), article.update);
 route.delete('/article/:title', user.role(1), article.del);
@@ -27,7 +27,7 @@ route.get('/like/:articleId', like.read);
 route.post('/like/:articleId', user.role(1), like.create);
 route.delete('/like/:id', user.role(1), like.del);
 
-route.get('/tag/:name', search.tag);
+route.get('/tag/:tags', search.tag);
 route.get('/author/:name', search.author);
 route.get('/search/:q', search.search);
 
