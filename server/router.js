@@ -2,6 +2,7 @@ import router from 'koa-router';
 import * as article from './article';
 import * as comment from './comment';
 import * as user from './user';
+import * as search from './search';
 
 const route = router();
 
@@ -20,5 +21,9 @@ route.post('/user', user.role(3), user.create);
 route.patch('/user/:name', user.role(1), user.update);
 route.delete('/user/:name', user.role(1), user.del);
 route.post('/auth', user.auth);
+
+route.get('/tag/:name', search.tag);
+route.get('/author/:name', search.author);
+route.get('/search/:q', search.search);
 
 export default route;

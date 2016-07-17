@@ -69,6 +69,7 @@ export function *update(next) {
   for(let key in patch) {
     var ret = Store.validSchema(key, patch, schema);
     if(!ret) continue;
+    change[key] = ret.value;
   }
 
   var ops = yield collection.updateOne({id}, {$set: change});

@@ -74,8 +74,8 @@ export function *update(next) {
     var ret = Store.validSchema(key, patch, schema);
     if(!ret) continue;
     change[key] =
-      key === 'password' ? Store.hash(patch[key]) :
-      key === 'role' ? detectRole(patch[key]) : patch[key];
+      key === 'password' ? Store.hash(ret.value) :
+      key === 'role' ? detectRole(ret.value) : ret.value;
   }
 
   var ops = yield collection.updateOne({name}, {$set: change});
