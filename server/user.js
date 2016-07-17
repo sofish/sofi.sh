@@ -27,7 +27,7 @@ export function *read(next) {
 
   // user profile
   if(name) {
-    var user = yield collection.find({name}).limit(1).next();
+    let user = yield collection.find({name}).limit(1).next();
     this.assert(user, 404);
     return this.body = userFilter(user);
   }

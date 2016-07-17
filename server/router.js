@@ -12,6 +12,7 @@ route.delete('/article/:title', user.role(1), article.del);
 
 route.get('/comment/:id?', comment.read);
 route.post('/comment', user.role(1), comment.create);
+route.patch('/comment/:id', user.role(1), comment.update);
 route.delete('/comment/:id', user.role(1), comment.del);
 
 route.get('/user/:name?', user.read);
