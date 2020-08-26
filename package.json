@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/sofish/sofi.sh#readme",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt": "^5.0.0",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-helmet": "^1.0.0",
