@@ -18,5 +18,5 @@ date: 2022-01-10
 
 如果你路过上海或深圳想一约，或者有其他想聊的，可以通过 [sofish@icloud.com](mailto:sofish@icloud.com) 联系到我；如果你对这个网站的内容感兴趣，可以通过关注下图这个公众号来接收推送，因为本站不打算提供 RSS Feed。
 
-![微信公众号：思考没有乐趣](/assets/mp-qrcode.jpg)  
+![微信公众号：思考没有乐趣](.gitbook/assets/mp-qrcode.jpg)  
 思考没有乐趣
